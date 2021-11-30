@@ -6,7 +6,7 @@
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <style type="text/css">
-    .draggable { width: 90px; height: 90px;  float: left; margin: 0 10px 10px 0; border: 0px; }
+    #draggable { width: 90px; height: 90px;  float: left; margin: 0 10px 10px 0; border: 0px; }
     .ui-widget-header p, 
 #toolbar { float:left; border-style:solid; border-color:#000000; border-width:thin; width: 120px; height: 350px; margin-right:3px; }
 #container { float:left; border-style:solid; border-color:#000000; border-width:thin; width:800px; height:110px; padding: 5; }
@@ -22,7 +22,8 @@
   $("#container").droppable({
     accept:"#dragOrange",
   drop: function(event, ui) {
-  $("#container").append("<img src='https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png' id='dragOrange' id='draggable' width = 100px height = 100px />");
+  $("#container").append("<img src='https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png' id='draggable' width = 100px height = 100px />");
+  $( "#draggable" ).draggable({ snap: "#container"});
   }
   });
   /*
