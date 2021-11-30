@@ -17,12 +17,11 @@ def create_midi():
     duration = 1    # In beats
     tempo    = 60   # In BPM
     volume   = 100
-    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created
-                      # automatically)
+    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created automatically)
     MyMIDI.addTempo(track, time, tempo)
     for i, pitch in enumerate(degrees):
         MyMIDI.addNote(track, channel, pitch, time + i, duration, volume)
 
-    with open("midis/major-scale.mid", "wb") as output_file:
+    with open("major-scale.mid", "wb") as output_file:
         MyMIDI.writeFile(output_file)
-    return send_from_directory(directory="midis",filename="major-scale.mid", as_attachment=True, mimetype="audio/midi")
+    return send_file("major-scale.mid", as_attachment=True, mimetype="audio/midi")
