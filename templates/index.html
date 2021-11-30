@@ -1,1 +1,59 @@
-<p>Hello, World!</p>
+<!Doctype html>
+<html>
+<head>
+<title>Drag n Drop from a Div to an another Div using Jquery</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<style type="text/css">
+    .draggable { width: 90px; height: 90px;  float: left; margin: 0 10px 10px 0; border: 0px; }
+    .ui-widget-header p, 
+#toolbar { float:left; border-style:solid; border-color:#000000; border-width:thin; width: 120px; height: 350px; margin-right:3px; }
+#container { float:left; border-style:solid; border-color:#000000; border-width:thin; width:800px; height:110px; padding: 5; }
+#dragOrange { width:90px; height:90px; }
+#dragApple { width:90px; height:90px; }
+</style>
+
+<script type="text/javascript">
+  $(document).ready( function() {
+  $( "#draggable" ).draggable({ snap: "#container"});
+  $("#dragOrange").draggable({ helper: "clone" ,snap: "#container"});
+  $("#dragApple").draggable({ helper: "clone" ,snap: "#container"});
+  $("#container").droppable({
+    accept:"#dragOrange",
+  drop: function(event, ui) {
+  $("#container").append("<img src='https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png' id='dragOrange' id='draggable' width = 100px height = 100px />");
+  }
+  });
+  /*
+  $("#container").droppable({
+    accept:"#dragApple",
+  drop: function(event, ui) {
+  $("#container").append("<img src='https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png' id='dragApple' id='draggable' width = 100px height = 100px />");
+  }}); 
+  */
+  
+  } );
+  </script>
+</head>
+
+<body>
+<div id="toolbar">
+<div class="tbutton"><img id="dragOrange" src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png" width = 100px height = 100px/></div>
+<div class="tbutton"><img id="dragApple" src="https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png" width = 100px height = 100px/></div>
+</div>
+
+<div id="container" ></div>
+
+<div>
+  <img src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png"  id="draggable" width = 100px height = 100px />
+  
+</div>
+<div>
+  <img src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png"  id="draggable" width = 100px height = 100px />
+  
+</div>
+
+
+</body>
+</html>
