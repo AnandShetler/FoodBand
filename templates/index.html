@@ -1,60 +1,137 @@
 <!Doctype html>
 <html>
 <head>
-<title>Drag n Drop from a Div to an another Div using Jquery</title>
+<title>Food</title>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <style type="text/css">
     #draggable { width: 90px; height: 90px;  float: left; margin: 0 10px 10px 0; border: 0px; }
     .ui-widget-header p, 
-#toolbar { float:left; border-style:solid; border-color:#000000; border-width:thin; width: 120px; height: 350px; margin-right:3px; }
-#container { float:left; border-style:solid; border-color:#000000; border-width:thin; width:800px; height:110px; padding: 5; }
-#dragOrange { width:90px; height:90px; }
-#dragApple { width:90px; height:90px; }
+#toolbar { float:left; border-style:solid; border-color:#000000; border-width:thin; width: 120px; height: 800px; margin-right:45px; }
+.container { float:left; border-style:solid; border-color:#000000; border-width:thin; width:80%; height:100px;  }
+.dragger { width:100px; height:100px; }
+
 </style>
 
 <script type="text/javascript">
-  $(document).ready( function() {
-  $( "#draggable" ).draggable({ snap: "#container"});
-  $("#dragOrange").draggable({ helper: "clone" ,snap: "#container"});
-  $("#dragApple").draggable({ helper: "clone" ,snap: "#container"});
-  $("#container").droppable({
-    accept:"#dragOrange",
-  drop: function(event, ui) {
-  $("#container").append("<img src='https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png' id='draggable' width = 100px height = 100px />");
-  $( "#draggable" ).draggable({ snap: "#container"});
-  }
+  $(function() {
+  // adds fruit to container when dropped on it
+  $(".container").droppable({
+    drop: function(event, ui) {
+      if (ui.draggable.hasClass("dragger")) {
+          var $item = $(ui.helper).clone();
+          $item.removeClass("dragger");
+          $item.addClass("fruit");
+          $(this).append($item);
+          makeDraggable($item);
+      }
+      else if($(ui).parent().hasClass("container")){// 
+
+          $(this).append($item);
+          makeDraggable($item);
+      } 
+    }
   });
-  /*
-  $("#container").droppable({
-    accept:"#dragApple",
-  drop: function(event, ui) {
-  $("#container").append("<img src='https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png' id='dragApple' id='draggable' width = 100px height = 100px />");
-  }}); 
-  */
+  // makes dropped fruit draggable again
   
-  } );
+
+  $(".dragger").draggable({ 
+    helper: "clone" ,
+    snap: ".container",
+    grid: [ 50, 120],
+    snapMode: "inner",
+    start: function() {},
+    stop: function() {
+      console.log('stopped')
+  }});
+  
+  
+} );
+function makeDraggable($item) {
+     $item.draggable({
+      snap: ".container",
+      snapMode: "inner",
+      //revert: true,
+      grid: [ 20, 110],
+      containment: "parent",
+        start: function() {},
+        stop: function() {
+          console.log('stopped')
+       }
+     });
+   }
+
+function func($item){
+  $item.droppable({
+    drop: function(event, ui) {
+      if (ui.draggable.hasClass("dragger")) {
+          var $item = $(ui.helper).clone();
+          $item.removeClass("dragger");
+          $item.addClass("fruit");
+          $(this).append($item);
+          makeDraggable($item);
+      }
+      
+    }
+  });
+}
+function tracks() {
+  var fruitlist = ["orange","apple"]
+for (let f = 0;f < fruitlist.length;f++){
+    let fruit = document.getElementsByClassName(fruitlist[f]);
+    let frtx = []; 
+    let frty = [];
+    for (let i = 1; i < fruit.length;i++){ // x and y of fruit
+      frtx[i-1]=fruit[i].x
+      frty[i-1]=fruit[i].y
+    }
+    let ytrk = frty.filter(onlyUnique); // y level of each track
+    
+    // makes 2nd array of where fruit are on each tracks
+    var frttrk = []; 
+    for (let j = 0; j < ytrk.length;j++){
+      frttrk[j] = new Array();
+    }
+
+    for (let i = 0; i < frtx.length;i++){
+        for (let j = 0; j < ytrk.length;j++){
+          if (frty[i] == ytrk[j]){ // if y of fruit is y of track add it to frttrk[track#]
+            frttrk[j].push(frtx[i]); 
+          }
+        }  
+      }
+
+    console.log(frttrk)
+    }
+    
+}
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
+function track() {
+  let x = $("<div class='container' ></div>")
+  $("body").append(x);
+  func(x);
+}
+  
+
+  
+  
   </script>
 </head>
 
 <body>
 <div id="toolbar">
-<div class="tbutton"><img id="dragOrange" src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png" width = 100px height = 100px/></div>
-<div class="tbutton"><img id="dragApple" src="https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png" width = 100px height = 100px/></div>
+<div class="tbutton"><img class="dragger orange" src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png" width = 100px height = 100px ></div>
+<div class="tbutton"><img class="dragger apple" src="https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png" width = 100px height = 100px></div>
 </div>
 
-<div id="container" ></div>
-
-<div>
-  <img src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png"  id="draggable" width = 100px height = 100px />
-  
-</div>
-<div>
-  <img src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png"  id="draggable" width = 100px height = 100px />
-  
-</div>
-
+<div class="container" ></div>
+<div class="container" ></div>
+<button type="button" id="myBtn" onclick="tracks()">button</button>
+<button type="button" id="myBtn" onclick="track()">+track</button>
 
 </body>
 </html>
