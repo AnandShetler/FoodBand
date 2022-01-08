@@ -67,6 +67,21 @@
       }
     });
   }
+  function getTracks() {
+    var fruitlist = ["orange","apple"]
+    var tracks = []
+    $(".container").each(function() {
+      var track = []
+      for (const fruit of fruitlist) {
+        $(this).find("."+fruit).each(function() {
+          track.push([fruit, $(this).position().left-175])
+        });
+      }
+      tracks.push(track);
+    });
+    console.log(tracks);
+    return tracks
+  }
   function tracks() {
     var fruitlist = ["orange","apple"]
     for (let f = 0;f < fruitlist.length;f++){
@@ -104,6 +119,11 @@
     $("body").append(x);
     func(x);
   }
+
+  function createMidi() {
+    $("#createMidi").attr("href", "{{ url_for('create_midi') }}?tracks="+JSON.stringify(getTracks()))
+    $("#createMidi")[0].click();
+  }
   </script>
 </head>
 
@@ -118,6 +138,8 @@
   <button type="button" id="myBtn" onclick="tracks()">button</button>
   <button type="button" id="myBtn" onclick="track()">+track</button>
 
-  <a href="{{ url_for('create_midi') }}">DOWNLOAD</a>
+  <a onclick="createMidi();">DOWNLOAD</a>
+  <a id="createMidi" href="{{ url_for('create_midi') }}"></a>
+  
 </body>
 </html>
