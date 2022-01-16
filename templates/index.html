@@ -8,9 +8,10 @@
 <style type="text/css">
     #draggable { width: 90px; height: 90px;  float: left; margin: 0 10px 10px 0; border: 0px; }
     .ui-widget-header p, 
-#toolbar { float:left; border-style:solid; border-color:#000000; border-width:thin; width: 120px; height: 800px; margin-right:45px; }
-.container { float:left; border-style:solid; border-color:#000000; border-width:thin; width:80%; height:100px;  }
-.dragger { width:100px; height:100px; }
+  #toolbar { float:left; border-style:solid; border-color:#000000; border-width:thin; width: 120px; height: 900px; margin-right:45px; background-color:grey}
+  .container { float:left; border-style:solid; border-color:#000000; border-width:thin; width:80%; height:100px; }
+  .dragger { width:100px; height:100px; }
+  .tbutton { height: 100px}
 
 </style>
 
@@ -39,7 +40,7 @@
   $(".dragger").draggable({ 
     helper: "clone" ,
     snap: ".container",
-    grid: [ 50, 120],
+    grid: [ 50, 100],
     snapMode: "inner",
     start: function() {},
     stop: function() {
@@ -77,7 +78,7 @@ function func($item){
   });
 }
 function tracks() {
-  var fruitlist = ["orange","apple"]
+  var fruitlist = ["orange","apple","banana", "kiwi", "melon", "peach", "pear", "strawberry"]
 for (let f = 0;f < fruitlist.length;f++){
     let fruit = document.getElementsByClassName(fruitlist[f]);
     let frtx = []; 
@@ -110,28 +111,39 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 
-function track() {
-  let x = $("<div class='container' ></div>")
+function addTrack() {
+  let x = $("<div class='container' ><button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button></div>")
   $("body").append(x);
   func(x);
 }
-  
-
-  
+function clearTrack(track){ // deletes fruit from track
+  let fruits = track.childNodes;
+  for (let i = 2; i < fruits.length; i++) {
+    track.removeChild(fruits[i])
+  }
+}
   
   </script>
 </head>
 
 <body>
 <div id="toolbar">
-<div class="tbutton"><img class="dragger orange" src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png" width = 100px height = 100px ></div>
+<div class="tbutton"><img class="dragger orange" src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png" width = 100px  ></div>
 <div class="tbutton"><img class="dragger apple" src="https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png" width = 100px height = 100px></div>
+<div class="tbutton"><img class="dragger banana" src="https://www.pngall.com/wp-content/uploads/2016/04/Banana-Free-Download-PNG.png" width = 100px height = 100px></div>
+<div class="tbutton"><img class="dragger kiwi" src="https://purepng.com/public/uploads/large/purepng.com-kiwikiwidrawingfruitfooddelicious-331522418479vgkh8.png" width = 100px height = 100px></div>
+<div class="tbutton"><img class="dragger melon" src="https://pngimg.com/uploads/melon/melon_PNG14383.png" width = 100px height = 100px></div>
+<div class="tbutton"><img class="dragger peach" src="https://freepngimg.com/thumb/peach/7-2-peach-png-pic.png" width = 100px height = 100px></div>
+<div class="tbutton"><img class="dragger pear" src="https://purepng.com/public/uploads/large/bartlett-pear-avk.png" width = 67px height = 100px></div>
+<div class="tbutton"><img class="dragger strawberry" src="https://static.wixstatic.com/media/2cd43b_181dba9bcee04be391e1d114f2744318~mv2.png/v1/fill/w_320,h_285,q_90/2cd43b_181dba9bcee04be391e1d114f2744318~mv2.png" width = 100px height = 100px></div>
+
+
 </div>
 
-<div class="container" ></div>
-<div class="container" ></div>
-<button type="button" id="myBtn" onclick="tracks()">button</button>
-<button type="button" id="myBtn" onclick="track()">+track</button>
+<div class="container" > <button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button></div>
+<div class="container" > <button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button> </div>
+<button type="button" class="myBtn" onclick="tracks()">Fruits on each track logger</button>
+<button type="button" class="myBtn" onclick="addTrack()">+track</button>
 
 </body>
 </html>
