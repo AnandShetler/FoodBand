@@ -1,0 +1,28 @@
+#draggable { 
+    width: 90px;
+    height: 90px;
+    float: left;
+    margin: 0 10px 10px 0;
+    border: 0px;
+}
+.ui-widget-header p, #toolbar { 
+    float:left;
+    border-style:solid;
+    border-color:#000000;
+    border-width:thin;
+    width: 120px;
+    height: 800px;
+    margin-right:45px;
+}
+.container { 
+    float:left;
+    border-style:solid;
+    border-color:#000000;
+    border-width:thin;
+    width:80%;
+    height:100px;  
+}
+.dragger { 
+    width:100px;
+    height:100px; 
+}
