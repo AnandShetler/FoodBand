@@ -5,7 +5,8 @@ import json
 
 app = Flask(__name__)
 
-fruitNotes = {"orange":60, "apple":72}
+fruitNotes = {"orange":60, "apple":62, "banana": 64, "kiwi":67, "melon":69, "peach":71, "pear":72, "strawberry":74}
+fruitChannel = {"orange":0, "apple":2, "banana": 4, "kiwi":7, "melon":9, "peach":1, "pear":2, "strawberry":4}
 
 @app.route("/")
 def home():
@@ -17,8 +18,8 @@ def create_midi():
     track    = 0
     channel  = 0
     time     = 0    # In beats
-    duration = 1    # In beats
-    tempo    = 60   # In BPM
+    duration = 100    # In beats
+    tempo    = 6000   # In BPM
     volume   = 100
     # MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created automatically)
     # MyMIDI.addTempo(track, time, tempo)
@@ -32,9 +33,9 @@ def create_midi():
     midiFile = MIDIFile(len(tracks))
     trackNum = 0
     for track in tracks:
-        midiFile.addTempo(trackNum, 0, 60)
+        midiFile.addTempo(trackNum, 0, tempo)
         for note in track:
-            midiFile.addNote(trackNum, channel, fruitNotes[note[0]], note[1], duration, volume)
+            midiFile.addNote(trackNum, fruitChannel[note[0]], fruitNotes[note[0]], note[1], duration, volume)
         trackNum += 1
 
 

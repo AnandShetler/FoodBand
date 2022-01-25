@@ -31,7 +31,7 @@
     $(".dragger").draggable({ 
       helper: "clone" ,
       snap: ".container",
-      grid: [ 50, 120],
+      grid: [50, 100],
       snapMode: "inner",
       start: function() {},
       stop: function() {
@@ -44,9 +44,7 @@
     $item.draggable({
     snap: ".container",
     snapMode: "inner",
-    //revert: true,
-    grid: [ 20, 110],
-    containment: "parent",
+    grid: [50, 100],
       start: function() {},
       stop: function() {
         console.log('stopped')
@@ -82,56 +80,19 @@
     console.log(tracks);
     return tracks
   }
-  function tracks() {
-    var fruitlist = ["orange","apple","banana", "kiwi", "melon", "peach", "pear", "strawberry"]
-    for (let f = 0;f < fruitlist.length;f++){
-      let fruit = document.getElementsByClassName(fruitlist[f]);
-      let frtx = []; 
-      let frty = [];
-      for (let i = 1; i < fruit.length;i++){ // x and y of fruit
-        frtx[i-1]=fruit[i].x
-        frty[i-1]=fruit[i].y
-      }
-      let ytrk = frty.filter(onlyUnique); // y level of each track
-      
 
-      // makes 2nd array of where fruit are on each tracks
-      var frttrk = []; 
-      for (let j = 0; j < ytrk.length;j++){
-        frttrk[j] = new Array();
-      }
-
-      for (let i = 0; i < frtx.length;i++){
-        for (let j = 0; j < ytrk.length;j++){
-          if (frty[i] == ytrk[j]){ // if y of fruit is y of track add it to frttrk[track#]
-            frttrk[j].push(frtx[i]); 
-          }
-        }  
-      }
-      console.log(frttrk)
-    }
-  }
-  function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-  }
-
-function addTrack() {
-  let x = $("<div class='container' ><button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button></div>")
-  $("body").append(x);
-  func(x);
-}
-function clearTrack(track){ // deletes fruit from track
-  let fruits = track.childNodes;
-  for (let i = 2; i < fruits.length; i++) {
-    track.removeChild(fruits[i])
-  }
-}
-  
-  function track() {
-    let x = $("<div class='container' ></div>")
-    $("body").append(x);
+  function addTrack() {
+    let x = $("<div class='container' ><button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button></div>")
+    $("#tracksContainer").append(x);
     func(x);
   }
+  function clearTrack(track){ // deletes fruit from track
+    let fruits = track.childNodes;
+    for (let i = 2; i < fruits.length; i++) {
+      track.removeChild(fruits[i])
+    }
+  }
+  
 
   function createMidi() {
     $("#createMidi").attr("href", "{{ url_for('create_midi') }}?tracks="+JSON.stringify(getTracks()))
@@ -142,22 +103,26 @@ function clearTrack(track){ // deletes fruit from track
 
 <body>
   <div id="toolbar">
-    <div class="tbutton"><img class="dragger orange" src="https://www.sandjmandarins.com/wp-content/uploads/2019/03/Mandarin-Orange-PNG-Transparent-Image.png" width = 100px  ></div>
-    <div class="tbutton"><img class="dragger apple" src="https://purepng.com/public/uploads/large/purepng.com-fresh-applefoodsweettastyhealthyfruitappleleaf-981524677946vfurf.png" width = 100px height = 100px></div>
-    <div class="tbutton"><img class="dragger banana" src="https://www.pngall.com/wp-content/uploads/2016/04/Banana-Free-Download-PNG.png" width = 100px height = 100px></div>
-    <div class="tbutton"><img class="dragger kiwi" src="https://purepng.com/public/uploads/large/purepng.com-kiwikiwidrawingfruitfooddelicious-331522418479vgkh8.png" width = 100px height = 100px></div>
-    <div class="tbutton"><img class="dragger melon" src="https://pngimg.com/uploads/melon/melon_PNG14383.png" width = 100px height = 100px></div>
-    <div class="tbutton"><img class="dragger peach" src="https://freepngimg.com/thumb/peach/7-2-peach-png-pic.png" width = 100px height = 100px></div>
-    <div class="tbutton"><img class="dragger pear" src="https://purepng.com/public/uploads/large/bartlett-pear-avk.png" width = 67px height = 100px></div>
-    <div class="tbutton"><img class="dragger strawberry" src="https://static.wixstatic.com/media/2cd43b_181dba9bcee04be391e1d114f2744318~mv2.png/v1/fill/w_320,h_285,q_90/2cd43b_181dba9bcee04be391e1d114f2744318~mv2.png" width = 100px height = 100px></div>
+    <div class="tbutton"><img class="dragger orange" src="{{ url_for('static', filename='images/orange.png') }}" width = 100px  ></div>
+    <div class="tbutton"><img class="dragger apple" src="{{ url_for('static', filename='images/apple.png') }}" width = 100px height = 100px></div>
+    <div class="tbutton"><img class="dragger banana" src="{{ url_for('static', filename='images/banana.png') }}" width = 100px height = 100px></div>
+    <div class="tbutton"><img class="dragger kiwi" src="{{ url_for('static', filename='images/kiwi.png') }}" width = 100px height = 100px></div>
+    <div class="tbutton"><img class="dragger melon" src="{{ url_for('static', filename='images/melon.png') }}" width = 100px height = 100px></div>
+    <div class="tbutton"><img class="dragger peach" src="{{ url_for('static', filename='images/peach.png') }}" width = 100px height = 100px></div>
+    <div class="tbutton"><img class="dragger pear" src="{{ url_for('static', filename='images/pear.png') }}" width = 67px height = 100px></div>
+    <div class="tbutton"><img class="dragger strawberry" src="{{ url_for('static', filename='images/strawberry.png') }}" width = 100px height = 100px></div>
   </div>
 
-  <div class="container" > <button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button></div>
-  <div class="container" > <button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button> </div>
-  <button type="button" class="myBtn" onclick="tracks()">Fruits on each track logger</button>
+  <div id="tracksContainer">
+    <div class="container" > <button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button></div>
+    <div class="container" > <button type='button' class='myBtn'  onclick='clearTrack(this.parentElement)' style='float: right;'>Clear track</button> </div>
+  </div>
+
+  <button type="button" class="myBtn" onclick="getTracks()">Fruits on each track logger</button>
   <button type="button" class="myBtn" onclick="addTrack()">+track</button>
 
   <a onclick="createMidi();">DOWNLOAD</a>
+  <a id="createMidi"></a>
   
 </body>
 </html>
